@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+    <link rel="stylesheet" href="{% static 'form.css' %}">
+</head>
+<body>
+    <div class="banner">
+        <p><img src="cet.png" width="20px" alt=""><a href="">New Registration</a> | <a href="">Contact Us</a> | <a href="">Help</a>  |  <a href="" >   Logut   </a> | <a href="" class=>Signup</a></p>
+    </div>
+    <div class="sidebar">
+        <header>MH-CET</header>
+        <ul>
+            <a href=""><li>My Application</li></a>
+            <a href=""><li>Logout</li></a>
+            <a href=""><li>Back</li></a>
+        </ul>
+    </div>
+    <div class="form_layout">
+        <div class="page_header"><h1>Application | MH-CET | Undergraduate | Application No: {{46545737462}}</h1>
+        </div> 
+        <div class="whole_form">
+            <div class="form_header"><h2>Personal Details</h2><p>NOTE: Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, ipsam. Illum fuga minus quis facere!</p>
+            </div>
+            <div class="form">
+                {% if user.is_authenticated %}
+                <li><label for="name">Candidates First Name</label><br><input type="text" name="" id="name" value={{user.first_name}}></li>
+                <li><label for="father_name">Candidates Father Name</label><br><input type="text" name="" id="father_name"></li>
+                <li><label for="last_name">Candidates Last Name</label><br><input type="text" name="" id="last_name" value={{user.last_name}}></li>
+                <li><label for="mother_name">Candidates Mother Name</label><br><input type="text" name="" id="mother_name"></li>
+                <li><label for="gender">Gender:</label><br><input type="radio" name="gender" value="Male" >Male &nbsp;
+                    <input type="radio" name="gender" value="Female" id="gender">Female</li>
+                <li>&nbsp;&nbsp;&nbsp;<label for="dob">D.O.B.</label><input type="date" name="DOB" id="dob"></li>
+                <li><label for="phone_number">Phone Number</label><br><input type="text" name="" id="phone_number"></li>
+                <li><label for="email">Email ID</label><br><input type="text" name="" id="email" value={{user.email}}></li>
+                <li><div class="submit"><a href="upload"><input type="button" value="Submit & Next"></a></div></li>
+                {% endif %}
+            </div>
+    </div>
+</div>
+</body>
+</html>

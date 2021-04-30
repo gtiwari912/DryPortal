@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="{% static 'sign1.css' %}">
+    <title>Signup</title>
+</head>
+<body>
+<div class="container">
+    <div class="title">Registration</div>
+    <form action="signup" method="POST">
+        {% csrf_token %}
+        <div class="User-details">
+            <div class="input-box">
+                <span class="details">Full Name</span>
+                <input type="text" name="first_name" placeholder="Enter your first name" required>
+            </div>
+             <div class="input-box">
+                <span class="details">Last Name</span>
+                <input type="text" name="last_name" placeholder="Enter your last name" required>
+            </div>
+             <div class="input-box">
+                <span class="details">username</span>
+                <input type="text" name="username" placeholder="username" required>
+            </div>
+             <div class="input-box">
+                <span class="details">Email ID</span>
+                <input type="text" name="email" placeholder="Email-ID" required>
+            </div>
+             <div class="input-box">
+                <span class="details">Password</span>
+                <input type="password" name="password1" placeholder="password" required>
+            </div>
+             <div class="input-box">
+                <span class="details">Confirm password</span>
+                <input type="password" name="password2" placeholder="confirm password" required>
+            </div>
+            <label for="gender">Gender:<br><input type="radio" name="gender" value="Male" >Male &nbsp;
+                    <input type="radio" name="gender" value="Female" id="gender">Female &nbsp;
+                <input type="radio" name="gender" value="Not to say" >Not to say</label>
+                <a href="form"><div class="button">
+               <input type="submit" value="Register"></div></a>
+        </div>
+    </form>
+    <div class="message">
+        {% for message in messages %}
+       <h3 style="color: red;">{{message}}</h3> 
+         {% endfor %} 
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'upload.css' %}">
+    <title>Upload PDF</title>
+</head>
+<body>
+    <!-- <input type="file" id="ctrl" webkitdirectory="" directory="" multiple=""> -->
+    <div class="banner">
+        <p><img src="cet.png" width="20px" alt=""><a href="">New Registration</a> | <a href="">Contact Us</a> | <a href="">Help</a>  | <a href="" >   Logut   </a> | <a href="" class=>Signup</a></p>
+    </div>
+    <div class="sidebar">
+        <header>MH-CET</header>
+        <ul>
+            <a href=""><li>My Application</li></a>
+            <a href=""><li>Logout</li></a>
+            <a href=""><li>Back</li></a>
+        </ul>
+    </div>
+    <div class="table">
+        <table>
+            <tr>
+                <th class = "sr_no">Sr. No.</th>
+                <th class = "doc_name">Document</th>
+                <th class = "doc_input">Upload</th>
+                <th class = "doc_view">View</th>
+            </tr>
+            <tr>
+                <td class="sr_no">1</td>
+                <td class="doc_name">Aadhar</td>
+                <td class="doc_input"><label for="myfile">Select a file:</label><div class="upload"><input type="file" style="width: 80px;"></div></td>
+                <td class="doc_view"><a href="#">View pdf</a></td>
+            </tr>
+            <tr>
+                <td class="sr_no">2</td>
+                <td class="doc_name">Birth Certificate</td>
+                <td class="doc_input"><label for="myfile">Select a file:</label><div class="upload"><input type="file" style="width: 80px;"></div></td>
+                <td class="doc_view"><a href="#">View pdf</a></td>
+            </tr>
+            <tr>
+                <td class="sr_no">3</td>
+                <td class="doc_name">S.S.C.</td>
+                <td class="doc_input"><label for="myfile">Select a file:</label><div class="upload"><input type="file" style="width: 80px;"></div></td>
+                <td class="doc_view"><a href="#">View pdf</a></td>
+            </tr>
+            <tr>
+                <td class="sr_no">1</td>
+                <td class="doc_name">H.S.C.</td>
+                <td class="doc_input"><label for="myfile">Select a file:</label><div class="upload"><input type="file" style="width: 80px;"></div></td>
+                <td class="doc_view"><a href="#">View pdf</a></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

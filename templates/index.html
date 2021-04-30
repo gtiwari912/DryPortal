@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'stylesheet.css' %}">
+  <title>Cet</title>
+</head>
+<body>
+<div class="logo">  <a href="#"><img src="{% static 'cet.png' %}" width="60px" height="60px" alt=""></a></div>
+<nav class="header">
+  <nav class="inner_header"><ul>
+  <a href="#"><li>Home</li></a>
+  <a href="#"><li>Important Dates</li></a>
+  <a href="#"><li>Notification</li></a>
+  <a href="#"><li>News</li></a>
+  <a href="#"><li>Downloads</li></a>
+  <a href="#"><li>Contact Us</li></a>
+</ul></nav></nav> <br><br><br><br><br>
+<div class="form"><form action="login" method="POST">
+  {% csrf_token %}
+  <input type="username" name='username' placeholder="username">
+  <br><br>
+  <input type="password" name='password' placeholder="password">
+  <br><br><br>
+  <div class="login_btn"><input type="submit" value="LOGIN"></div>
+  <br>
+  <div class="signup"><p>Don't have an account? <a href="signup"> SignUp</a></p></div>
+</form>
+<br><br><br>
+    <div class="message">
+        {% for message in messages %}
+       <h3 style="color: red;">{{message}}</h3> 
+         {% endfor %} 
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,2056 @@
+<html xml:lang="en" lang="en"><head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5 maximum-scale=1.0">
+        <title>DigiLocker</title>
+        <!-- global style css -->
+        <link rel="stylesheet" href="https://img1.digitallocker.gov.in/public/smart/css/bootstrap.min.css">
+        <link rel="shortcut icon" type="image/png" href="https://img1.digitallocker.gov.in/core/img/favicon.png">
+        <style>
+            body, html {
+                background-color: #F5F8F9;
+                -webkit-font-smoothing: antialiased!important;
+                color: #000000!important;
+                letter-spacing: -.009em!important;
+            }
+            .card {
+                box-shadow: 0 0 20px rgba(90, 70, 87, 0.12);
+                border-bottom: 5px solid #673efd !important;
+                transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+                border-radius:10px; ;
+            }
+            .loading-img {
+                z-index: 1020;
+                height: 0;
+                width: 0;
+                padding: 15px;
+                border: 3px solid #536dfe1f;
+                border-right-color: #536DFE;
+                border-radius: 22px;
+                -webkit-animation: rotate 1s infinite linear;
+                position: absolute;
+                left: 50%!important;
+                top: 50%!important;
+                margin-left: -15px;
+                -webkit-animation: spin 1s linear infinite; /* Safari */
+                animation: spin 1s linear infinite;
+            }
+            .loader {
+                border: 4px solid #f3f3f3;
+                border-radius: 50%;
+                border-top: 4px solid blue;
+                border-bottom: 4px solid blue;
+                width: 20px;
+                height: 20px;
+                -webkit-animation: spin 2s linear infinite;
+                animation: spin 2s linear infinite;
+            }
+            /* Safari */
+            @-webkit-keyframes spin {
+                0% { -webkit-transform: rotate(0deg); }
+                100% { -webkit-transform: rotate(360deg); }
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            .overlay {
+
+                z-index: 1010;
+                height: 100%;
+                left: 0;
+                position: absolute;
+                top: 0;
+                width: 100%;
+            }
+            .card-body {
+                padding: 2rem;}
+            .aadhar-input {
+                position: relative;
+            }
+            .aadhar-input input {
+                display: block;
+                width: 100%;
+                box-sizing: border-box
+            }
+            .aadhar-input img {
+                position: absolute;
+                top: 10px;
+                right: 10px
+            }
+            a:link {
+                text-decoration: none;
+            }
+            @media only screen and (max-width: 600px) {
+                body, html {
+                    background-color: #FFFFFF!important;
+                }
+                .card {
+                    background-color: #fff0;
+                    border: 0px solid rgba(0,0,0,.125);
+                    box-shadow: 0 0px 0px rgba(0,0,0,0.12), 0 0px 0px rgba(0,0,0,0.24);
+                    border-bottom: 0px solid #673efd !important;
+                }
+                .card-body {
+                    padding: .5rem;}
+                .card-title {
+
+                    font-size: 20px!important;
+                }
+            }
+            .nav-pills .nav-link.active, .nav-pills .show>.nav-link:hover {
+                color: #fff !important;
+                background-color: #007bff ;
+            }
+            .alert-dark {
+                margin-top: 15px;
+                color: #505050;
+                background-color: #e9e8f8;
+                border-color: #d6d8db;
+            }
+            select.form-control:not([size]):not([multiple]) {
+                height: calc(2.25rem + 2px);
+                padding-right: 0px !important;
+                padding-left: 5px;
+            }
+            .form-control {
+                display: block;
+                color: #000000;
+                background-color: #fff;
+                background-clip: padding-box;
+
+            }
+            .form-control:focus {
+                color: #000 !important;
+                border-color: #007bff!important;
+
+            }
+
+            .form-control:active {
+                color: #000 !important;
+            }
+            .form-control[readonly] {
+                background-color: #ffffff ;
+                opacity: 1;
+            }
+            ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                color: #49505794 !important;
+                opacity: 1; /* Firefox */
+            }
+
+            :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                color: #49505794 !important;
+            }
+
+            ::-ms-input-placeholder { /* Microsoft Edge */
+                color: #49505794 !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <style>
+
+.navbar-light .navbar-toggler-icon {
+
+    display: none;
+}
+	.navbar-light .navbar-toggler {
+      border-color: rgba(0, 0, 0, 0);
+	}
+	.icon {
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  transform: translate(-50%,-50%);
+  width: 80px;
+  height: 60px;
+  cursor: pointer;
+}
+
+.arrow {
+      position: absolute;
+    top: 28px;
+    width: 20%;
+    height: 3px;
+	    right: 69px;
+    background-color: #707070;
+}
+
+.arrow::after {
+     content: '';
+    position: absolute;
+    width: 60%;
+    height: 3px;
+        top: -3px;
+    right: 9px;
+    background-color: #707070;
+    transform: rotate(-45deg);
+}
+
+.arrow::before {
+      content: '';
+    position: absolute;
+    width: 60%;
+    height: 3px;
+       top: 3px;
+    right: 9px;
+    background-color: #707070;
+    /* box-shadow: 0 3px 5px rgba(0, 0, 0, .2); */
+    transform: rotate(45deg);
+}
+</style>
+
+<header class="bg_f8f fire_header3 header_commonsticky-top sticky-offset header_common mb_30 ">
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-12" style="text-align: center;">
+      <nav class="navbar navbar-expand-lg navbar-light nav justify-content-center">
+
+          <a class="navbar-brand order-1 order-lg-1" href="https://digilocker.gov.in/"><img class="" style="padding-right:5px; border-right: 1px solid #eee; margin-right: 5px;" src="https://img1.digitallocker.gov.in/public/smart/images/nationalemblemindia.png" width="30" height="40" alt="logo"><img src="https://img1.digitallocker.gov.in/public/smart/images/digiLocker_logo_19_091219.png" width="159" height="43" alt="logo"></a>
+
+
+      </nav>
+    </div>
+  </div>
+</div>
+</header>
+
+        <div class="overlay" id="overlay" style="display: none;"></div>
+        <div class="loading-img" id="loading-img" style="display: none;"></div>
+        <div class="container">
+            <div class="row justify-content-md-center justify-content-sm-center">
+                <div class="col-12 col-sm-8 col-md-8 col-lg-5 col-xl-5">
+                    <section>
+                                                <div class="tab" id="profile_card" style="display: block;">
+    <form method="post" class="mb-5 mt-10" onsubmit="return signin()" id="profile_form" autocomplete="off">
+        <div class="card mb-1 mt-1 box-shadow">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Sign In to your account! </h4>
+
+                <nav class="nav nav-pills flex-column nav-fill " id="pills-tab" role="tablist">
+                    <div class="row">
+                    <div class="col-7 col-sm-5" style="padding-right: 0px;">
+                    <a class=" text-sm-center nav-link active" id="pills-part-a-tab" data-toggle="pill" role="tab" aria-controls="pills-part-a" aria-selected="true" style="cursor:pointer">Mobile/Aadhaar</a>
+                    </div>
+                    <div class="col-5 col-sm-4" style="padding-left: 0px;">
+                    <a class=" text-sm-center nav-link" id="pills-profile-tab" data-toggle="pill" role="tab" aria-controls="pills-profile" aria-selected="false" style="cursor:pointer">Username</a>
+                    </div>
+                        <div class="d-none d-sm-block">
+
+                        </div>
+                    </div>
+                </nav>
+
+
+                <div class="form-group" id="mob">
+
+                    <input id="mobile" title="must be a number" type="tel" onclick="this.select();" pattern="[0-9]*" inputmode="numeric" onkeypress="return isNumberKey(event)" class="form-control " maxlength="12" minlength="10" autocomplete="off" placeholder="Aadhaar/Mobile Number*" tabindex="1" autocapitalize="off" onblur="get_user(this)" onpaste="return false" autofocus="on">
+                    <div class="loader" id="input_loader" style="margin-top: -28px;float:right;margin-right: 11px;display:none"></div>
+                    <small id="mobileHelp" class="form-text text-muted" style="display: none; font-weight: normal;">Enter your registered Aadhaar or Mobile number</small><div class="invalid-feedback" id="mobile_msg">Please enter valid Aadhaar/Mobile number</div>
+                    <div class="alert alert-danger" role="alert" style="display: none;margin-top: 7px" id="multiuserDiv">
+                        <strong>This mobile is associated with multiple accounts, please select one to Sign In</strong>
+                        <hr>
+                        <div id="multiuser"></div>
+                    </div>
+                </div>
+                <div class="form-group" id="user" style="display:none">
+
+                    <input id="username" class="form-control" minlength="3" autocomplete="off" placeholder="Username*" tabindex="1" autocapitalize="off" onpaste="return false" autofocus="on">
+
+                    <small id="usernameHelp" class="form-text text-muted" style="display: none;">Enter your username</small><div class="invalid-feedback" id="user_msg">Please enter valid username</div>
+                </div>
+
+                <div class="form-group" style="display: block;" id="pin">
+                    <div class="aadhar-input">
+                                                <input value="" readonly="" onfocus="this.removeAttribute('readonly')" tabindex="2" class="form-control" placeholder="6 digit security PIN*" maxlength="6" minlength="6" id="profilepin" title="must be a number" type="password" onclick="this.select();" pattern="[0-9]*" inputmode="numeric" onkeypress="return isNumberKey(event)" style="-webkit-text-security:disc;" autocapitalize="off" autocomplete="off" onpaste="return false" required="">
+
+                        <a onclick="eye('profilepin')" id="eyeClose" style="cursor: pointer;"><img src="https://img1.digitallocker.gov.in/assets/img/icons/hide.svg" width="20" style="top: 13px;"></a>
+                        <a onclick="eye('profilepin')" id="eyeOpen" style="cursor: pointer;display: none"><img src="https://img1.digitallocker.gov.in/assets/img/icons/show.svg" width="20" style="top: 13px;"></a>
+                    </div>
+                    <small id="pinHelp" class="form-text text-muted" style="display: none;">Enter your 6 digit security PIN for authentication</small> <div class="invalid-feedback" id="pin_msg">Please enter 6 digit PIN</div>
+                    <div class="invalid-feedback" style="display: block;">
+                    <div role="alert" id="profile_err" style="margin-bottom: 10px;"></div>
+                </div>
+
+                </div>
+
+                 <div class="form-group d-flex  mt-0 mb-0"> <a onclick="loading('show')" href="/signin/set_pin" tabindex="4"><label id="buttonHelp" class="form-text  " style="cursor:pointer">Forgot security PIN? </label> </a></div>
+
+                <input type="hidden" name="csrf" id="csrf" value="J6BcZktRyEgFYKNbyUruI/as/Sy5JyIhaBaPPPrmxAS3HW1x7DWrZ7/jN6HNunp2FfqkUeCuJ---qZNLRGJuYOc0HKRKf0YdeeooZa81rRU/Hl/ROtD5R89dKVklDtHIy94GsVap7OwHFQR---cWwch/8g==">
+                <input type="hidden" name="view" id="view" value="web">
+                <input type="hidden" name="txn" id="txn" value="">
+                <input type="hidden" name="user" id="user" value="">
+                <div class="form-group">
+                    <div class="row justify-content-md-center justify-content-sm-center">
+                        <div class="col text-center mt-2">
+                            <button class="btn btn-success btn-lg btn-block " tabindex="3" type="submit" name="button" id="button" disabled="disabled">
+                                Sign In
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-md-center justify-content-sm-center mt-2">
+            <div class="col text-center">
+                <div class="form-group">
+                    <label>Don't have an account? <a onclick="loading('show')" href="/signup" tabindex="5">Sign Up</a> </label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div id="logopage"></div>
+<div class="tab" id="otp_card" style="display:none">
+
+    <div class="card mb-1 mt-1 box-shadow">
+
+        <div class="card-body">
+            <h4 class="card-title mb-4">Verify OTP</h4>
+            <!--<h4 class="card-title mb-4">
+                                      Verify Mobile OTP
+                        </h4>-->
+
+            <div>
+                <p class="text-muted" id="otp_sent_success">  </p>
+            </div>
+            <form method="post" class="mb_10 mt_10" onsubmit="return verify_otp()" id="verify_otp_form">
+                <div class="form-group">
+
+                    <div class="form-group">
+                        <div class="aadhar-input">
+                            <input value="" class="form-control" placeholder="Enter OTP" maxlength="6" minlength="6" autocomplete="off" id="a_otp_1" tabindex="1" autocapitalize="off" style="-webkit-text-security: disc;" title="must be a number" type="password" onclick="this.select();" pattern="[0-9]*" inputmode="numeric" onkeypress="return isNumberKey(event)" onpaste="return false" required="">
+                            <a onclick="eye('a_otp_1')" id="eyeCloseOtp" style="cursor: pointer;"><img src="https://img1.digitallocker.gov.in/assets/img/icons/hide.svg" width="20" style="top: 13px;"></a>
+                            <a onclick="eye('a_otp_1')" id="eyeOpenOtp" style="cursor: pointer;display: none"><img src="https://img1.digitallocker.gov.in/assets/img/icons/show.svg" width="20" style="top: 13px;"></a>
+                        </div>
+                        <small id="otpHelp" class="form-text text-muted" style="display: none;">Please enter 6 digit OTP to complete verification</small>
+                    </div>
+
+                    <div class="text-danger mt-0" role="alert" id="otp_err"></div>
+                </div>
+                <div>
+                    <div id="countdown_div">
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="font-weight-normal">Wait few minutes for the OTP,<br><strong>don't refresh or close!</strong></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row justify-content-md-center justify-content-sm-center">
+                    <div class="col text-center">
+                        <button class="btn btn-success btn-lg btn-block " tabindex="2" type="submit" name="button" id="otp_button" disabled="disabled">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="mt-4">
+                <div class="row" id="resend_otp_div" style="display: none;">
+                    <div class="col text-center">
+                        <p>Didn’t get the OTP? <a onclick="send_otp()" href="#" tabindex="3"><span>Resend OTP</span></a> </p>
+
+                    </div>
+
+                </div>
+                <div id="tryAnoterWayDiv" style="display: block;">
+                    <div class="col text-center">
+                        <p>Didn’t get the OTP?
+                        <stan class="text-muted">Resend OTP</stan>
+                        <span id="countdown" style="display:none;"></span> </p>
+
+                    </div>
+                </div>
+                <div class="col text-center" id="mobile_update_link" style="display: none;">
+                     <a onclick="send_otp_mobile_update()" href="#" tabindex="3"><span>Update mobile number</span></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                        <div class="tab" id="mobile_update_card" style="display:none">
+    <div class="card mb-1 mt-1 box-shadow">
+
+        <div class="card-body" id="mobile_auth_otp_body">
+            <h4 class="card-title mb-4">Update mobile number</h4>
+
+
+            <div>
+                <p class="text-muted" id="otp_sent_success_mobile_update1">  </p>
+            </div>
+            <form method="post" class="mb_10 mt_10" onsubmit="return verify_mobile_auth_otp()" id="verify_mobile_auth_form">
+                <div class="form-group">
+
+                    <div class="form-group">
+                        <div class="aadhar-input">
+                            <input value="" class="form-control" placeholder="Enter OTP" maxlength="6" minlength="6" autocomplete="off" id="a_otp_2" tabindex="1" autocapitalize="off" style="-webkit-text-security: disc;" title="must be a number" type="tel" onclick="this.select();" pattern="[0-9]*" inputmode="numeric" onkeypress="return isNumberKey(event)" onpaste="return false" onkeyup="enable_auth(this)" required="">
+                            <a onclick="eye('a_otp_2')" id="eyeCloseAuth" style="cursor: pointer;"><img src="https://img1.digitallocker.gov.in/assets/img/icons/hide.svg" width="20" style="top: 13px;"></a>
+                            <a onclick="eye('a_otp_2')" id="eyeOpenAuth" style="cursor: pointer;display: none"><img src="https://img1.digitallocker.gov.in/assets/img/icons/show.svg" width="20" style="top: 13px;"></a>
+                        </div>
+                        <small id="otpHelp1" class="form-text text-muted" style="display: none;">Please enter 6 digit OTP to complete verification</small>
+                    </div>
+
+                    <div class="text-danger mt-0" role="alert" id="otp_err2"></div>
+                </div>
+                <div>
+                    <div id="countdown_div">
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="font-weight-normal">Wait few minutes for the OTP,<br><strong>don't refresh or close!</strong></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row justify-content-md-center justify-content-sm-center">
+                    <div class="col text-center">
+                        <button class="btn btn-primary btn-lg btn-block " tabindex="2" type="submit" name="button" id="otp_auth_button" disabled="disabled">
+                            Verify
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="mt-4">
+                <div class="row" id="resend_otp_div_mobile_update" style="display: none;">
+                    <div class="col text-center">
+                        <p>Didn’t get the OTP? <a onclick="send_otp_mobile_update()" href="#" tabindex="3"><span>Resend OTP</span></a> </p>
+
+                    </div>
+
+                </div>
+                <div id="tryAnoterWayDiv_mobile_update" style="display: block;">
+                    <div class="col text-center mb-5">
+                        <p>Didn’t get the OTP?
+                        <stan class="text-muted">Resend OTP</stan>
+                        <span id="countdown" style="display:none;"></span> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card-body" id="mobileUpdate_body" style="display:none">
+            <h4 class="card-title mb-4">Update mobile number</h4>
+            <div id="mobile_update">
+                <form method="post" class="mb_10 mt_10" onsubmit="return mobile_authenticate()" id="mobile_exist_form">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <div class="aadhar-input">
+                                <p class="text-muted">Please enter new mobile number.</p>
+                                <input value="" class="form-control" placeholder="Mobile number*" maxlength="10" minlength="10" autocomplete="off" id="set_mobile_update" title="must be a number" type="tel" onclick="this.select();" pattern="[0-9]*" inputmode="numeric" onkeypress="return isNumberKey(event)" onpaste="return false" autofocus="on" tabindex="1" onkeyup="enable_mobile(this)">
+
+                            </div>
+                        </div>
+                        <div class="text-danger mt-0" role="alert" id="mobile_err"></div>
+                    </div>
+
+                    <div class="row justify-content-md-center justify-content-sm-center">
+                        <div class="col text-center">
+                            <button class="btn btn-primary btn-lg btn-block " tabindex="2" type="submit" name="button" id="mobile_button" disabled="disabled">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="mobile_update_otp" style="display:none">
+                <div>
+                    <p class="text-muted" id="otp_sent_success_mobile_update2">  </p>
+                </div>
+                <form method="post" class="mb_10 mt_10" onsubmit="return update_mobile()" id="verify_mobile_form">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <div class="aadhar-input">
+                                <input class="form-control" maxlength="10" minlength="10" autocomplete="off" id="mobile_reset" tabindex="1" readonly="" required="">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="aadhar-input">
+                                <input value="" class="form-control" placeholder="Enter OTP" maxlength="6" minlength="6" autocomplete="off" id="a_otp_3" tabindex="1" autocapitalize="off" style="-webkit-text-security: disc;" title="must be a number" type="tel" onclick="this.select();" pattern="[0-9]*" inputmode="numeric" onkeypress="return isNumberKey(event)" onpaste="return false" required="">
+                                <a onclick="eye('a_otp_3')" id="eyeCloseUpdate" style="cursor: pointer;"><img src="https://img1.digitallocker.gov.in/assets/img/icons/hide.svg" width="20" style="top: 13px;"></a>
+                                <a onclick="eye('a_otp_3')" id="eyeOpenUpdate" style="cursor: pointer;display: none"><img src="https://img1.digitallocker.gov.in/assets/img/icons/show.svg" width="20" style="top: 13px;"></a>
+                            </div>
+                            <small id="otpHelp2" class="form-text text-muted" style="display: none;">Please enter 6 digit OTP to complete verification</small>
+                        </div>
+
+                        <div class="text-danger mt-0" role="alert" id="mobile_update_otp_err"></div>
+                    </div>
+                    <div>
+                        <div id="countdown_div">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="font-weight-normal">Wait few minutes for the OTP,<br><strong>don't refresh or close!</strong></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-md-center justify-content-sm-center">
+                        <div class="col text-center">
+                            <button class="btn btn-success btn-lg btn-block " tabindex="2" type="submit" name="button" id="otp_button_3">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="mt-4">
+                    <div class="row" id="resend_otp_div_mobile_authenticate" style="display: none;">
+                        <div class="col text-center">
+                            <p>Didn’t get the OTP? <a onclick="mobile_authenticate()" href="#" tabindex="3"><span>Resend OTP</span></a> </p>
+
+                        </div>
+
+                    </div>
+                    <div id="tryAnoterWayDiv_mobile_authenticate" style="display: block;">
+                        <div class="col text-center mb-5">
+                            <p>Didn’t get the OTP?
+                            <stan class="text-muted">Resend OTP</stan>
+                            <span id="countdown" style="display:none;"></span> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="mobile_update_otp_success" style="display:none">
+    <div class="alert alert-success" role="alert" id="mobile_update_success_msg">
+
+    </div>
+</div>
+                        <style>
+    .lbl {
+        float: right;
+        margin-right: 8px;
+        margin-top: -32px;
+        position: relative;
+        z-index: 2;
+    }
+    svg {
+        width: 80px;
+        display: block;
+        margin: 0px auto 0;
+    }
+
+    .path {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 0;
+        &.circle {
+            -webkit-animation: dash .9s ease-in-out;
+            animation: dash .9s ease-in-out;
+        }
+        &.line {
+            stroke-dashoffset: 1000;
+            -webkit-animation: dash .9s .35s ease-in-out forwards;
+            animation: dash .9s .35s ease-in-out forwards;
+        }
+        &.check {
+            stroke-dashoffset: -100;
+            -webkit-animation: dash-check .9s .35s ease-in-out forwards;
+            animation: dash-check .9s .35s ease-in-out forwards;
+        }
+    }
+    @-webkit-keyframes dash {
+        0% {
+            stroke-dashoffset: 1000;
+        }
+        100% {
+            stroke-dashoffset: 0;
+        }
+    }
+
+    @keyframes dash {
+        0% {
+            stroke-dashoffset: 1000;
+        }
+        100% {
+            stroke-dashoffset: 0;
+        }
+    }
+
+    @-webkit-keyframes dash-check {
+        0% {
+            stroke-dashoffset: -100;
+        }
+        100% {
+            stroke-dashoffset: 900;
+        }
+    }
+
+    @keyframes dash-check {
+        0% {
+            stroke-dashoffset: -100;
+        }
+        100% {
+            stroke-dashoffset: 900;
+        }
+    }
+    .footer-button{
+        float: right;
+    }
+</style>
+<div class="tab" id="username_card" style="display:none;">
+    <form method="post" class="mb-5 mt-10" onsubmit="return create_username()" id="username_form" autocomplete="off">
+        <div class="card mb-1 mt-1 box-shadow">
+            <div class="card-body">
+                <h5 class="card-title mb-4">Create Username for your account </h5>
+
+                <!--                <div class="form-group" id="user">
+
+                                    <input id="old_username" class="form-control" minlength="3" autocomplete="off" placeholder="Username*"  tabindex="1" autocapitalize="off"   />
+                                    <label for="dl" class="lbl" > @dl </label>
+                                    <small id="usernameHelp" class="form-text text-muted" >Enter your username.</small><div class="invalid-feedback" id="user_msg">Please enter valid username</div>
+                                </div>-->
+                <div class="form-group" id="old_user" style="display:none;">
+
+                    <input id="old_username" class="form-control" minlength="3" autocomplete="off" placeholder="Current Username*" tabindex="1" autocapitalize="off" readonly="true">
+<!--                    <label for="dl" class="lbl" > @dl </label>-->
+                    <small id="useraliasHelpOld" class="form-text text-muted">Your current username</small><div class="invalid-feedback" id="user_msg1">Please enter valid username</div>
+                </div>
+
+                <div class="form-group" id="new_user" style="display:none;">
+
+                    <input id="set_username" class="form-control" minlength="4" autocomplete="off" placeholder="New Username*" tabindex="2" autocapitalize="off" onkeyup="enable_alias_submit(this)">
+<!--                    <label for="dl" class="lbl" > @dl </label>-->
+                    <small id="useraliasHelpNew" class="form-text text-muted">Enter new username</small><div class="invalid-feedback" id="user_msg2">Username must contain min 4 and max 50 characters, consisting only of alphabets, numbers and special characters  - (hyphen) _ (underscore) .(dot)</div>
+                </div>
+
+                <div class="mb-3" style="display: none;" id="radioSelection">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input " name="optradio" tabindex="3" style="margin-top: 6px;" value="old" onclick="enablenewuser(this)" checked="">Continue with my current username
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" style="padding-bottom: 5px;">
+                            <input type="radio" class="form-check-input" name="optradio" tabindex="2" style="margin-top: 6px;" value="new" onclick="enablenewuser(this)">I want to change my current username
+                        </label>
+                    </div>
+
+                </div>
+                <div class="invalid-feedback" style="display: block;">
+                    <div role="alert" id="username_err"></div>
+                </div>
+                <div class="form-group">
+                    <div class="row justify-content-md-center justify-content-sm-center">
+                        <div class="col text-center mt-2">
+                            <button class="btn btn-success btn-lg btn-block " tabindex="4" type="submit" name="button" id="useralias_button">
+                                Submit
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- Username Successfully Updated message -->
+
+
+
+<!--        <div class="card mb-1 mt-1 box-shadow" style="text-align: center; display: none;" id="newUsernameSuccess_card">
+
+            <img src="../../../smart/images/right_tick.jpg" style="width: 100px; height: auto;" alt=""/>
+            <h5>Username Successfully Updated!</h5><br>
+            <button type="button" class="btn btn-primary" style="margin-bottom: 15px; margin-top: 0px;">Go to Home</button>
+        </div>--><!-- end -->
+
+<div class="card mb-1 mt-1 box-shadow text-center" style="display: none;" id="newUsernameSuccess_card">
+    <div class="card-body m-2">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+        <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"></circle>
+        <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "></polyline>
+        </svg><br>
+        <h4>Username Successfully Updated!</h4>
+        <p>Your Username is now active.</p>
+<!--        <p class="footer-button mb-3">
+
+            <button type="button" class="btn btn-light" >Go to Home</button>
+        </p>
+        <p> &nbsp  &nbsp  &nbsp</p>-->
+    </div>
+</div>
+
+                        <style type="text/css">
+
+
+	.loading-dots {
+	padding: 15px;
+
+    left: 5%!important;
+    right: 5%;
+    top: 35%!important;
+
+    text-align: center;
+	}
+
+ @keyframes cssAnimation {
+        to   { visibility: visible; }
+    }
+
+
+    @keyframes a-lb {
+        0% {
+            transform:translateX(-300px)
+        }
+        5% {
+            transform:translateX(-240px)
+        }
+        15% {
+            transform:translateX(-30px)
+        }
+        25% {
+            transform:translateX(-30px)
+        }
+        30% {
+            transform:translateX(-20px)
+        }
+        45% {
+            transform:translateX(-20px)
+        }
+        50% {
+            transform:translateX(-15px)
+        }
+        65% {
+            transform:translateX(-15px)
+        }
+        70% {
+            transform:translateX(-10px)
+        }
+        95% {
+            transform:translateX(-10px)
+        }
+        100% {
+            transform:translateX(-5px)
+        }
+    }
+    @keyframes a-s {
+        100% {
+            opacity:1
+        }
+    }
+    @keyframes a-h {
+        100% {
+            opacity:0
+        }
+    }
+    @keyframes a-nt {
+        100% {
+            transform:none
+        }
+    }
+    @keyframes a-e {
+        43% {
+            animation-timing-function:cubic-bezier(.8, 0, .2, 1);
+            transform:scale(.75)
+        }
+        60% {
+            animation-timing-function:cubic-bezier(.8, 0, 1, 1);
+            transform:translateY(-16px)
+        }
+        77% {
+            animation-timing-function:cubic-bezier(.16, 0, .2, 1);
+            transform:none
+        }
+        89% {
+            animation-timing-function:cubic-bezier(.8, 0, 1, 1);
+            transform:translateY(-5px)
+        }
+        100% {
+            transform:none
+        }
+    }
+    @keyframes a-ef {
+        24% {
+            animation-timing-function:cubic-bezier(.8, 0, .6, 1);
+            transform:scaleY(.42)
+        }
+        52% {
+            animation-timing-function:cubic-bezier(.63, 0, .2, 1);
+            transform:scaleY(.98)
+        }
+        83% {
+            animation-timing-function:cubic-bezier(.8, 0, .84, 1);
+            transform:scaleY(.96)
+        }
+        100% {
+            transform:none
+        }
+    }
+    @keyframes a-efs {
+        24% {
+            animation-timing-function:cubic-bezier(.8, 0, .6, 1);
+            opacity:.3
+        }
+        52% {
+            animation-timing-function:cubic-bezier(.63, 0, .2, 1);
+            opacity:.03
+        }
+        83% {
+            animation-timing-function:cubic-bezier(.8, 0, .84, 1);
+            opacity:.05
+        }
+        100% {
+            opacity:0
+        }
+    }
+    @keyframes a-es {
+        24% {
+            animation-timing-function:cubic-bezier(.8, 0, .6, 1);
+            transform:rotate(-25deg)
+        }
+        52% {
+            animation-timing-function:cubic-bezier(.63, 0, .2, 1);
+            transform:rotate(-42.5deg)
+        }
+        83% {
+            animation-timing-function:cubic-bezier(.8, 0, .84, 1);
+            transform:rotate(-42deg)
+        }
+        100% {
+            transform:rotate(-43deg)
+        }
+    }
+
+	.dot {
+  display: inline-block;
+  margin: 0 auto;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: .4em;
+  animation-name: dots;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes dots {
+  50% {
+    opacity: 0;
+    transform: scale(0.7) translateY(10px);
+  }
+}
+
+.dot-1 {
+  background-color: #673efd;
+  animation-delay: 0.2s;
+}
+
+.dot-2 {
+  background-color: #673efd;
+  animation-delay: 0.4s;
+}
+
+.dot-3 {
+  background-color: #673efd;
+  animation-delay: 0.6s;
+}
+
+.dot-4 {
+  background-color: #673efd;
+  animation-delay: 0.8s;
+}
+	</style>
+    <div class="container h-100" id="verified_logo" style="display: none;">
+  <div class="row h-100 justify-content-center align-items-center">
+    <form class="col-12" style="margin-top: 35%;">
+    <div class="loading-dots">
+
+    <div class="wrap">
+  <div class="dot dot-1"></div>
+  <div class="dot dot-2"></div>
+  <div class="dot dot-3"></div>
+  <div class="dot dot-4"></div>
+  <div class="dot dot-5"></div>
+</div>
+  <h3 style="margin-bottom: 8px; font-size: 17px;"></h3>
+  <p>  </p>
+  <div style="animation:a-s 3s 1.25s 1 forwards;opacity:0; margin-top:18px;" class="msg">Give us a moment while we set things up for you...</div> </div>
+
+    </form>
+  </div>
+</div>
+
+
+
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <img src="https://digilocker.gov.in/index.php/?logout=yes&amp;forcelogout=yes" style="display:none"><script>
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) === ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) === 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+
+    function resend_otp_timer() {
+        document.getElementById("countdown_div").style.display = 'block';
+        document.getElementById("resend_otp_div").style.display = 'none';
+        document.getElementById("tryAnoterWayDiv").style.display = 'block';
+        var mobile_update = document.getElementById("resend_otp_div_mobile_update");
+        if (mobile_update) {
+            document.getElementById("resend_otp_div_mobile_update").style.display = 'none';
+            document.getElementById("tryAnoterWayDiv_mobile_update").style.display = 'block';
+            document.getElementById("resend_otp_div_mobile_authenticate").style.display = 'none';
+            document.getElementById("tryAnoterWayDiv_mobile_authenticate").style.display = 'block';
+        }
+        //var seconds = document.getElementById("countdown").textContent;
+        var seconds = 60;
+        document.getElementById("countdown").textContent = seconds;
+        var countdown = setInterval(function () {
+            seconds--;
+            document.getElementById("countdown").textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(countdown);
+                document.getElementById("countdown_div").style.display = 'none';
+                document.getElementById("resend_otp_div").style.display = 'block';
+                document.getElementById("tryAnoterWayDiv").style.display = 'none';
+                if (mobile_update) {
+                    document.getElementById("resend_otp_div_mobile_update").style.display = 'block';
+                    document.getElementById("tryAnoterWayDiv_mobile_update").style.display = 'none';
+                    document.getElementById("resend_otp_div_mobile_authenticate").style.display = 'block';
+                    document.getElementById("tryAnoterWayDiv_mobile_authenticate").style.display = 'none';
+                }
+
+            }
+        }, 1000);
+    }
+    var currentTab = 0;
+    showTab(currentTab);
+    function showTab(n) {
+        var x = document.getElementsByClassName("tab");
+        var i;
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[n].style.display = "block";
+    }
+    function showdobform() {
+        var x = document.getElementsByClassName("tab");
+        var i;
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        document.getElementById("verify_dob_card").style.display = "block";
+    }
+    function nextPrev(n) {
+        if (document.getElementById("view").value === 'mobile') {
+            window.location.href = '/signup/mobile';
+        } else if (document.getElementById("view").value === 'web') {
+            window.location.href = '/signup';
+        } else if (document.getElementById("view").value === 'partner') {
+            window.location.href = '/signup';
+        }
+    }
+    function backOTP() {
+        var curPage = window.location.href;
+        window.location.href = curPage;
+    }
+
+    function validateForm() {
+        var x, y, i, valid = true;
+        x = document.getElementsByClassName("tab");
+        y = x[currentTab].getElementsByTagName("input");
+        for (i = 0; i < y.length; i++) {
+            if (y[i].value === "" || y[i].value.length < y[i].attributes['minlength'].value) {
+                y[i].className += " invalid";
+                valid = false;
+            }
+        }
+        return valid;
+    }
+    function move(prev, from, to, event) {
+        if (to !== '') {
+            if (from.value.length === parseInt(from.attributes['maxlength'].value)) {
+                document.getElementById(to).focus();
+            }
+        }
+        if (prev !== '') {
+            if (event.key === "Backspace" && from.value.length === 0) {
+                document.getElementById(prev).focus();
+                var prevVal = document.getElementById(prev).value;
+                document.getElementById(prev).value = prevVal;
+            }
+        }
+    }
+    function clear_input(prefix, size) {
+        var i;
+        var field = [];
+        for (i = 1; i <= size; i++) {
+            field[i] = document.getElementById(prefix + "_" + i);
+            field[i].value = '';
+        }
+    }
+    function get_input_value(prefix, size) {
+        var i;
+        var field = '';
+        for (i = 1; i <= size; i++) {
+            field += document.getElementById(prefix + "_" + i).value;
+        }
+        return field;
+    }
+    function final(url, auth) {
+
+        const form = document.createElement('form');
+        form.method = 'post';
+        if (document.getElementById("view").value === 'mobile') {
+            form.action = url + '/mobile_view';
+        } else {
+            form.action = url + '/oauth';
+        }
+        const hiddenField = document.createElement('input');
+        hiddenField.type = 'hidden';
+        hiddenField.name = 'loginTxn';
+        hiddenField.value = auth;
+        form.appendChild(hiddenField);
+
+        var txn = document.getElementById("txn").value;
+        const hiddenFieldTxn = document.createElement('input');
+        hiddenFieldTxn.type = 'hidden';
+        hiddenFieldTxn.name = 'txn';
+        hiddenFieldTxn.value = txn;
+        form.appendChild(hiddenFieldTxn);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+    function loading(type) {
+        if (type === 'show') {
+            document.getElementById("overlay").style.display = "Block";
+            document.getElementById("loading-img").style.display = "Block";
+        } else {
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("loading-img").style.display = "none";
+        }
+    }
+    loading('hide');
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    function isName(name) {
+        var regName = /^[a-zA-Z. ]+$/;
+        return regName.test(name);
+
+    }
+
+
+    const d = [
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
+        [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],
+        [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
+        [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],
+        [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
+        [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],
+        [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
+        [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
+        [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+    ];
+    // permutation table
+    const p = [
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
+        [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],
+        [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
+        [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],
+        [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
+        [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
+        [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
+    ];
+    function invArray(array) {
+
+        if (Object.prototype.toString.call(array) === "[object Number]") {
+            array = String(array);
+        }
+
+        if (Object.prototype.toString.call(array) === "[object String]") {
+            array = array.split("").map(Number);
+        }
+
+        return array.reverse();
+    }
+    function validate(array) {
+
+        var c = 0;
+        var invertedArray = invArray(array);
+        for (var i = 0; i < invertedArray.length; i++) {
+            c = d[c][p[(i % 8)][invertedArray[i]]];
+        }
+        return (c === 0);
+    }
+    function enable_disable(prefix, form_id, status, size) {
+        if (status) {
+            loading('show');
+        } else {
+            loading('hide');
+        }
+
+        var i;
+        var field = [];
+        for (i = 1; i <= size; i++) {
+            field[i] = document.getElementById(prefix + "_" + i);
+            field[i].disabled = status;
+            field[i].readonly = status;
+        }
+        var form = document.getElementById(form_id);
+        form.button.disabled = status;
+    }
+    function enable_disable_aadhaar_otp(id, form_id, status) {
+        if (status) {
+            loading('show');
+        } else {
+            loading('hide');
+        }
+
+        //var i;
+        var field;
+        //for (i = 1; i <= size; i++) {
+        field = document.getElementById(id);
+        field.disabled = status;
+        field.readonly = status;
+        //}
+        var form = document.getElementById(form_id);
+        form.button.disabled = status;
+    }
+
+    function send_otp() {
+        clear_input('a_otp', 1);
+        document.getElementById("resend_otp_div").style.display = 'none';
+        document.getElementById("tryAnoterWayDiv").style.display = 'block';
+        document.getElementById("otp_err").innerHTML = '';
+        var username = document.getElementById("user");
+        var username = username.value;
+        var txn = document.getElementById("txn").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var res = JSON.parse(this.responseText);
+                if (typeof res.code !== 'undefined' && res.code === 952) {
+                    document.getElementById("otp_err").innerHTML = res.error_description;
+                    return;
+                }
+                if (res.status === 'success') {
+                    loading('hide');
+                    document.getElementById("resend_otp_div").style.display = 'none';
+                    document.getElementById("tryAnoterWayDiv").style.display = 'block';
+                    document.getElementById("otp_sent_success").innerHTML = res.msg;
+                    document.getElementById("txn").value = res.txn;
+                    document.getElementById("a_otp_1").focus();
+                    clear_input('a_otp', 1);
+                    resend_otp_timer();
+                } else if (res.status === 'error') {
+                    document.getElementById("otp_err").innerHTML = res.error_description;
+                    document.getElementById("resend_otp_div").style.display = 'block';
+                    document.getElementById("tryAnoterWayDiv").style.display = 'none';
+
+                }
+            } else if (this.readyState === 4) {
+                document.getElementById("otp_err").innerHTML = ' ';
+            }
+        };
+        var token = document.getElementById("csrf").value;
+        xhttp.open("POST", "/signin/send_otp_v4", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.timeout = 180000; // Set timeout to 4 seconds (4000 milliseconds)
+        xhttp.ontimeout = function () {
+            document.getElementById("otp_err").innerHTML = ' .[#timeout-c120]';
+        };
+        xhttp.send("username=" + username + "&txn=" + txn + "&token=" + token);
+        return false;
+    }
+
+    function get_user(str) {
+        var users = '';
+        document.getElementById("multiuserDiv").style.display = "none";
+        document.getElementById("multiuser").innerHTML = '';
+        document.getElementById("profilepin").disabled = false;
+        var mobile_aadhaar = str.value;
+        var token = document.getElementById("csrf").value;
+        if (mobile_aadhaar.length === 10) {
+            document.getElementById("profilepin").disabled = true;
+            document.getElementById("input_loader").style.display = "Block";
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                try {
+                    if (this.readyState === 4 && this.status === 200 && this.responseText !== 'null') {
+                        var res = JSON.parse(this.responseText);
+                        if (res.status === 'success') {
+                            document.getElementById("input_loader").style.display = "none";
+                            document.getElementById("profile_err").innerHTML = '';
+                            if (res.data) {
+                                users = res.data;
+                                users.forEach(showUsers);
+                                document.getElementById("profilepin").disabled = true;
+                            } else {
+                                document.getElementById("multiuserDiv").style.display = "none";
+                                document.getElementById("profilepin").disabled = false;
+                                document.getElementById("profilepin").focus();
+                                document.getElementById("input_loader").style.display = "none";
+                            }
+                        } else {
+                            document.getElementById("profilepin").disabled = false;
+                            document.getElementById("input_loader").style.display = "none";
+                            document.getElementById("multiuserDiv").style.display = "none";
+                            //document.getElementById("profile_err").innerHTML =res.error_description;
+
+                        }
+                    } else if (this.readyState === 4) {
+                        document.getElementById("input_loader").style.display = "none";
+                        document.getElementById("multiuserDiv").style.display = "none";
+                        document.getElementById("profilepin").disabled = false;
+                        document.getElementById("profilepin").focus();
+                        document.getElementById("profile_err").innerHTML = ' .';
+                    }
+                } catch (e) {
+                    document.getElementById("input_loader").style.display = "none";
+                    document.getElementById("multiuserDiv").style.display = "none";
+                    document.getElementById("profilepin").focus();
+                    document.getElementById("profile_err").innerHTML = '   ';
+
+                    return false;
+                }
+
+            };
+            xhttp.open("POST", '/signin/get_user', true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("mobile=" + mobile_aadhaar + "&token=" + token);
+            return false;
+
+        }
+    }
+    function showUsers(item, index) {
+        var types = ["aadhaar", "demographic"];
+        document.getElementById("multiuser").innerHTML += `<div class="form-check mt-2">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="Radios${index}" value="${item.digilockerid}" onclick="selectUser(this)" >
+                            <label class="form-check-label" for="exampleRadios1">
+                                ${maskUser(item.name)}
+                            </label>
+
+                            ${types.includes(item.user_type) ? '<img src="https://img1.digitallocker.gov.in/assets/img/icons/correct.svg" width="20" style="top: 13px;" >' : ''}
+                        </div>`;
+        document.getElementById("multiuserDiv").style.display = "Block";
+        document.getElementById("mobileHelp").style.display = "none";
+    }
+    function maskUser(str) {
+        if (str.length <= 4) {
+            return str;
+        } else {
+            var username = str;
+            var first2 = username.substring(0, 2);
+            var last2 = username.substring(username.length - 2);
+
+            var mask = username.substring(2, username.length - 2).replace(/[a-z\d]/gi, "*");
+            var masked = first2 + mask + last2;
+            return masked;
+        }
+    }
+    function selectUser(str) {
+
+        var user = str.value;
+        document.getElementById("user").value = user;
+        document.getElementById("profilepin").disabled = false;
+        document.getElementById("profilepin").focus();
+    }
+    function eye(prefix) {
+        var viewType = document.getElementById('view').value;
+        var field = document.getElementById(prefix);
+        if (viewType === "mobile") {
+            if (field.hasAttribute("style")) {
+                field.removeAttribute("style");
+                document.getElementById("eyeClose").style.display = "none";
+                document.getElementById("eyeOpen").style.display = "Block";
+                document.getElementById("eyeCloseOtp").style.display = "none";
+                document.getElementById("eyeOpenOtp").style.display = "Block";
+                if (document.getElementById("eyeCloseAuth")) {
+                    document.getElementById("eyeCloseAuth").style.display = "none";
+                    document.getElementById("eyeOpenAuth").style.display = "Block";
+                    document.getElementById("eyeCloseUpdate").style.display = "none";
+                    document.getElementById("eyeOpenUpdate").style.display = "Block";
+                }
+            } else {
+                document.getElementById("eyeOpen").style.display = "none";
+                document.getElementById("eyeClose").style.display = "Block";
+                document.getElementById("eyeOpenOtp").style.display = "none";
+                document.getElementById("eyeCloseOtp").style.display = "Block";
+                field.setAttribute("style", "-webkit-text-security:disc");
+                if (document.getElementById("eyeCloseAuth")) {
+                    document.getElementById("eyeCloseAuth").style.display = "block";
+                    document.getElementById("eyeOpenAuth").style.display = "none";
+                    document.getElementById("eyeCloseUpdate").style.display = "block";
+                    document.getElementById("eyeOpenUpdate").style.display = "none";
+                }
+            }
+            if (field.type === "password") {
+                field.type = "text";
+                field.removeAttribute("style");
+                document.getElementById("eyeClose").style.display = "none";
+                document.getElementById("eyeOpen").style.display = "Block";
+            } else if (field.type === "text") {
+                field.type = "password";
+                document.getElementById("eyeOpen").style.display = "none";
+                document.getElementById("eyeClose").style.display = "Block";
+            }
+            if (field.type === "password") {
+                field.type = "text";
+                field.removeAttribute("style");
+                document.getElementById("eyeClose").style.display = "none";
+                document.getElementById("eyeOpen").style.display = "Block";
+            } else if (field.type === "text") {
+                field.type = "password";
+                document.getElementById("eyeOpen").style.display = "none";
+                document.getElementById("eyeClose").style.display = "Block";
+            }
+        } else {
+            if (field.type === "password") {
+                field.type = "text";
+                field.removeAttribute("style");
+                document.getElementById("eyeClose").style.display = "none";
+                document.getElementById("eyeOpen").style.display = "Block";
+                document.getElementById("eyeCloseOtp").style.display = "none";
+                document.getElementById("eyeOpenOtp").style.display = "Block";
+            } else if (field.type === "text") {
+                field.type = "password";
+                document.getElementById("eyeOpen").style.display = "none";
+                document.getElementById("eyeClose").style.display = "Block";
+                document.getElementById("eyeCloseOtp").style.display = "block";
+                document.getElementById("eyeOpenOtp").style.display = "none";
+            } else if (field.type === "tel") {
+                if (field.hasAttribute("style")) {
+                    document.getElementById("eyeCloseOtp").style.display = "none";
+                    document.getElementById("eyeOpenOtp").style.display = "Block";
+                    document.getElementById("eyeClose").style.display = "none";
+                    document.getElementById("eyeOpen").style.display = "Block";
+                    field.removeAttribute("style");
+                    if (document.getElementById("eyeCloseAuth")) {
+                        document.getElementById("eyeCloseAuth").style.display = "none";
+                        document.getElementById("eyeOpenAuth").style.display = "Block";
+                        document.getElementById("eyeCloseUpdate").style.display = "none";
+                        document.getElementById("eyeOpenUpdate").style.display = "Block";
+                    }
+                } else {
+                    document.getElementById("eyeOpenOtp").style.display = "none";
+                    document.getElementById("eyeCloseOtp").style.display = "Block";
+                    document.getElementById("eyeClose").style.display = "Block";
+                    document.getElementById("eyeOpen").style.display = "none";
+                    field.setAttribute("style", "-webkit-text-security:disc");
+                    if (document.getElementById("eyeCloseAuth")) {
+                        document.getElementById("eyeCloseAuth").style.display = "block";
+                        document.getElementById("eyeOpenAuth").style.display = "none";
+                        document.getElementById("eyeCloseUpdate").style.display = "block";
+                        document.getElementById("eyeOpenUpdate").style.display = "none";
+                    }
+
+                }
+            }
+
+        }
+
+
+    }
+    window.onload = function () {
+        document.getElementById('mobile').focus();
+    };
+
+
+
+    //update mobile//
+    function enable_auth(str) {
+        var authotp = str.value;
+        if (authotp.length === 6) {
+            document.getElementById("otp_auth_button").disabled = false;
+        } else {
+            document.getElementById("otp_auth_button").disabled = true;
+        }
+    }
+    function send_otp_mobile_update() {
+        var mobile_aadhaar = document.getElementById("mobile").value;
+        console.log(mobile_aadhaar);
+        clear_input('a_otp', 1);
+        document.getElementById("resend_otp_div_mobile_update").style.display = 'none';
+        document.getElementById("tryAnoterWayDiv_mobile_update").style.display = 'block';
+        document.getElementById("otp_err").innerHTML = '';
+        var username = document.getElementById("user");
+        var username = username.value;
+        var txn = document.getElementById("txn").value;
+        loading('show');
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var res = JSON.parse(this.responseText);
+
+                if (typeof res.code !== 'undefined' && res.code === 952) {
+                    document.getElementById("otp_err").innerHTML = res.error_description;
+                    return;
+                }
+                if (res.status === 'success') {
+                    loading('hide');
+                    document.getElementById("otp_card").style.display = 'none';
+                    document.getElementById("mobile_update_card").style.display = 'block';
+                    // document.getElementById("resend_otp_div").style.display = 'none';
+                    // document.getElementById("tryAnoterWayDiv").style.display = 'block';
+                    document.getElementById("otp_sent_success_mobile_update1").innerHTML = res.msg;
+                    document.getElementById("txn").value = res.txn;
+                    document.getElementById("a_otp_2").focus();
+                    clear_input('a_otp', 2);
+                    resend_otp_timer();
+                } else if (res.status === 'error') {
+                    loading('hide');
+                    document.getElementById("otp_err").innerHTML = res.error_description;
+                    document.getElementById("resend_otp_div_mobile_update").style.display = 'block';
+                    document.getElementById("tryAnoterWayDiv_mobile_update").style.display = 'none';
+
+                }
+            } else if (this.readyState === 4) {
+                loading('hide');
+                document.getElementById("otp_err").innerHTML = '   ';
+            }
+        };
+        var token = document.getElementById("csrf").value;
+        xhttp.open("POST", "/signin/send_otp_mobile_update_auth_v4", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.timeout = 180000; // Set timeout to 4 seconds (4000 milliseconds)
+        xhttp.ontimeout = function () {
+            document.getElementById("otp_err").innerHTML = ' .[#timeout-c120]';
+        };
+        xhttp.send("username=" + username + "&txn=" + txn + "&token=" + token);
+        return false;
+    }
+
+    function verify_mobile_auth_otp() {
+        document.getElementById("otp_err2").innerHTML = '';
+        var user = document.getElementById("user").value;
+        var otp = get_input_value('a_otp', 2);
+        if (otp.length !== 6) {
+            document.getElementById("a_otp_2").focus();
+            document.getElementById("otp_err2").innerHTML = 'Please enter a valid OTP.';
+            return false;
+        }
+        enable_disable_aadhaar_otp('a_otp_2', 'verify_mobile_auth_form', true);
+
+        //loading('show');
+        //enable_disable('a_otp', 'verify_mobile_auth_form', true, 2);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            try {
+                if (this.readyState === 4 && this.status === 200 && this.responseText !== 'null') {
+                    var res = JSON.parse(this.responseText);
+
+                    if (typeof res.code !== 'undefined' && res.code === 952) {
+                        document.getElementById("otp_err2").innerHTML = res.error_description;
+                        return;
+                    }
+                    if (res.status === 'success') {
+                        loading('hide');
+                        document.getElementById("mobile_auth_otp_body").style.display = 'none';
+                        document.getElementById("mobileUpdate_body").style.display = 'Block';
+
+                    } else if (res.status === 'error') {
+                        enable_disable_aadhaar_otp('a_otp_2', 'verify_mobile_auth_form', false);
+                        //loading('hide');
+                        //enable_disable('a_otp', 'verify_mobile_auth_form', true, 2);
+                        document.getElementById("otp_err2").innerHTML = res.error_description;
+                    } else {
+                        enable_disable_aadhaar_otp('a_otp_2', 'verify_mobile_auth_form', false);
+                        //loading('hide');
+                        //enable_disable('a_otp', 'verify_mobile_auth_form', true, 2);
+                        document.getElementById("otp_err2").innerHTML = ' .';
+                    }
+                } else if (this.readyState === 4) {
+                    enable_disable_aadhaar_otp('a_otp_2', 'verify_mobile_auth_form', false);
+                    //loading('hide');
+                    //enable_disable('a_otp', 'verify_otp_form', false, 2);
+                    document.getElementById("otp_err2").innerHTML = ' .';
+                }
+            } catch (e) {
+                enable_disable_aadhaar_otp('a_otp_2', 'verify_mobile_auth_form', false);
+                //enable_disable('a_otp', 'verify_mobile_auth_form', true, 2);
+                document.getElementById("otp_err2").innerHTML = '   ';
+                return false;
+            }
+
+        };
+        var token = document.getElementById("csrf").value;
+        xhttp.open("POST", "/signin/verify_otp_mobile_update_auth", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var txn = document.getElementById("txn").value;
+        xhttp.timeout = 180000; // Set timeout to 4 seconds (4000 milliseconds)
+        xhttp.ontimeout = function () {
+            enable_disable_aadhaar_otp('a_otp_2', 'verify_mobile_auth_form', false);
+            //enable_disable('a_otp', 'verify_mobile_auth_form', true, 2);
+            document.getElementById("otp_err2").innerHTML = ' .[#timeout-c120]';
+        };
+        xhttp.send("user=" + user + "&otp=" + otp + "&txn=" + txn + "&token=" + token);
+        return false;
+    }
+    function enable_mobile(str) {
+        var mobileUpdate = str.value;
+        if (mobileUpdate.length === 10) {
+            document.getElementById("mobile_button").disabled = false;
+        } else {
+            document.getElementById("mobile_button").disabled = true;
+        }
+    }
+
+    function mobile_authenticate() {
+        document.getElementById("mobile_err").innerHTML = '';
+        document.getElementById("mobile_update_otp_err").innerHTML = '';
+        document.getElementById("otp_sent_success_mobile_update2").innerHTML = '';
+        var mobileInput = document.getElementById("set_mobile_update");
+        var mobile = mobileInput.value;
+        var regEx = /^[6-9]\d{9}$/;
+        if (!mobile.match(regEx)) {
+            document.getElementById('mobile_err').innerHTML = 'Enter a valid mobile number';
+            return false;
+        }
+        var txn = document.getElementById("txn").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var res = JSON.parse(this.responseText);
+                if (typeof res.code !== 'undefined' && res.code === 952) {
+                    document.getElementById("mobile_err").innerHTML = res.error_description;
+                    return;
+                }
+                if (res.status === 'success') {
+                    loading('hide');
+                    document.getElementById("mobile_update").style.display = 'none';
+                    document.getElementById("mobile_update_otp").style.display = 'block';
+                    document.getElementById("otp_sent_success_mobile_update2").innerHTML = res.msg;
+                    document.getElementById("txn").value = res.txn;
+                    document.getElementById("mobile_reset").value = res.mobile;
+                    document.getElementById("a_otp_3").focus();
+                    clear_input('a_otp', 3);
+                    resend_otp_timer();
+                } else if (res.status === 'error' && res.code == 401) {
+                    document.getElementById("mobile_err").innerHTML = res.error_description;
+                    document.getElementById("mobile_update_otp_err").innerHTML = res.error_description;
+                    document.getElementById("otp_sent_success_mobile_update2").innerHTML = '';
+                } else {
+                    document.getElementById("mobile_err").innerHTML = res.error_description;
+                }
+            } else if (this.readyState === 4) {
+                document.getElementById("mobile_err").innerHTML = '   ';
+            }
+        };
+        var token = document.getElementById("csrf").value;
+        xhttp.open("POST", "/signin/mobile_authentication", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.timeout = 180000; // Set timeout to 4 seconds (4000 milliseconds)
+        xhttp.ontimeout = function () {
+            document.getElementById("mobile_err").innerHTML = ' .[#timeout-c120]';
+        };
+        xhttp.send("mobile=" + mobile + "&txn=" + txn + "&token=" + token);
+        return false;
+    }
+
+
+
+    function update_mobile() {
+        document.getElementById("mobile_update_otp_err").innerHTML = '';
+        var username = document.getElementById("user").value;
+        var otp = document.getElementById("a_otp_3").value;
+        if (otp.length != 6) {
+            document.getElementById('mobile_update_otp_err').innerHTML = 'Please enter a valid OTP.';
+            return false;
+        }
+        var mobile = document.getElementById("mobile_reset").value;
+        var txn = document.getElementById("txn").value;
+        loading('show');
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            try {
+                if (this.readyState === 4 && this.status === 200 && this.responseText !== 'null') {
+                    var res = JSON.parse(this.responseText);
+                    if (res.status === 'success') {
+                        loading('hide');
+                        //document.getElementById('mobile_update_otp').style.display = "none";
+                        document.getElementById('mobile_update_card').style.display = "none";
+                        document.getElementById('mobile_update_otp_success').style.display = "Block";
+                        var mobile = document.getElementById('set_mobile_update').value;
+                        var mask_mobile = mobile.substring(6, 10);
+                        document.getElementById('mobile_update_success_msg').innerHTML = 'You have successfully updated your mobile number to xxxxxx' + mask_mobile + '.  Please use the updated mobile number for logging in from now on.';
+                        //console.log(document.getElementById("profilepin").value);
+                        var pin = document.getElementById("profilepin").value;
+
+                        if (pin.length == 6) {
+                            setTimeout(function () {
+                                document.getElementById('mobile_update_otp_success').style.display = "none";
+                                document.getElementById("verified_logo").style.display = 'Block';
+                                var login_url = '/signin';
+                                final(login_url, btoa(res.username + ':' + pin));
+
+                                //location.reload();
+                            }, 3000);
+                        }
+
+                    } else {
+                        loading('hide');
+                        document.getElementById("mobile_update_otp_err").innerHTML = res.error_description;
+                    }
+                } else if (this.readyState === 4) {
+                    loading('hide');
+                    document.getElementById("mobile_update_otp_err").innerHTML = ' .';
+                }
+            } catch (e) {
+                loading('hide');
+                document.getElementById("mobile_update_otp_err").innerHTML = '   ';
+                console.log(e);
+                return false;
+            }
+
+        };
+        var token = document.getElementById("csrf").value;
+        xhttp.open("POST", '/signin/update_mobile', true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("mobile=" + mobile + "&otp=" + otp + "&user=" + username + "&txn=" + txn + "&token=" + token);
+        return false;
+    }
+</script>
+
+<script>
+    var a = document.getElementById('mobile');
+    a.addEventListener('focus', function () {
+        document.getElementById("mobileHelp").classList.remove("text-muted");
+        mobileHelp.style.color = '#007bff';
+        mobileHelp.style.fontWeight = '600';
+    });
+    a.addEventListener('blur', function () {
+        document.getElementById("mobileHelp").classList.add("text-muted");
+        mobileHelp.style.fontWeight = 'normal';
+    });
+    var b = document.getElementById('profilepin');
+    b.addEventListener('focus', function () {
+        document.getElementById("pinHelp").classList.remove("text-muted");
+        pinHelp.style.color = '#007bff';
+        pinHelp.style.fontWeight = '600';
+    });
+    b.addEventListener('blur', function () {
+        document.getElementById("pinHelp").classList.add("text-muted");
+        pinHelp.style.fontWeight = 'normal';
+    });
+    var c = document.getElementById('username');
+    c.addEventListener('focus', function () {
+        document.getElementById("usernameHelp").classList.remove("text-muted");
+        usernameHelp.style.color = '#007bff';
+        usernameHelp.style.fontWeight = '600';
+    });
+    c.addEventListener('blur', function () {
+        document.getElementById("usernameHelp").classList.add("text-muted");
+        usernameHelp.style.fontWeight = 'normal';
+    });
+
+    window.onload = () => {
+        document.getElementById("a_otp_1").focus();
+        document.getElementById("mobile").focus();
+    };
+
+
+
+    function isNumberKey(evt) {
+
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+    var h1 = document.getElementById('a_otp_1');
+    h1.addEventListener('focus', function () {
+        document.getElementById("otpHelp").classList.remove("text-muted");
+        otpHelp.style.color = '#007bff';
+        otpHelp.style.fontWeight = '600';
+    });
+    h1.addEventListener('blur', function () {
+        document.getElementById("otpHelp").classList.add("text-muted");
+        otpHelp.style.fontWeight = 'normal';
+    });
+    function enableSignin() {
+        //alert('hii');
+        var a = document.getElementById("mobile").value;
+        var c = document.getElementById("username").value;
+        var b = document.getElementById("profilepin").value;
+
+        if (a.length === 12) {
+            var disallowedAadhaar = '123412341234';
+            var aadhaarNumber = a;
+            if (aadhaarNumber.length === 12 && (!validate(aadhaarNumber) || disallowedAadhaar === aadhaarNumber)) {
+                document.getElementById('mobile_msg').innerHTML = 'Enter valid Aadhaar number.';
+                document.getElementById('mobile_msg').classList.add("d-inline");
+                document.getElementById('mobileHelp').style.display = "none";
+                document.getElementById("mobile").focus();
+            } else {
+                document.getElementById('mobile_msg').classList.remove("d-inline");
+                document.getElementById('mobileHelp').style.display = "block";
+                document.getElementById("profilepin").focus();
+            }
+        } else if (a.length === 11) {
+            document.getElementById('mobile_msg').innerHTML = 'Enter valid Aadhaar/Mobile number.';
+            document.getElementById('mobile_msg').classList.add("d-inline");
+            document.getElementById('mobileHelp').style.display = "none";
+            document.getElementById("mobile").focus();
+        } else {
+            document.getElementById('mobile_msg').innerHTML = '';
+            document.getElementById('mobile_msg').classList.remove("d-inline");
+            document.getElementById('mobileHelp').style.display = "block";
+        }
+        if ((a !== "" || c !== '') && b !== "") {
+            // alert(a.value.length);
+            if ((a.length === 10 || a.length === 12 || c.length > 3) && b.length == 6) {
+                document.getElementById("button").disabled = false;
+            } else {
+                document.getElementById("button").disabled = true;
+            }
+        } else {
+            document.getElementById("button").disabled = true;
+        }
+    }
+    window.addEventListener("input", enableSignin);
+    function enable() {
+        //alert('hii');
+        var a = document.getElementById("a_otp_1").value;
+        if (a !== "" && a.length === 6) {
+            document.getElementById("otp_button").disabled = false;
+        } else {
+            document.getElementById("otp_button").disabled = true;
+        }
+    }
+    window.addEventListener("input", enable);
+
+    document.getElementById("pills-part-a-tab").onclick = function () {
+        document.getElementById("pills-profile-tab").classList.remove("active");
+        document.getElementById("pills-part-a-tab").classList.add("active");
+        document.getElementById("user").style.display = "none";
+        document.getElementById("mob").style.display = "block";
+        document.getElementById("username").value = '';
+        document.getElementById("profilepin").value = '';
+        document.getElementById("profile_err").innerHTML = '';
+        document.getElementById('user_msg').classList.remove("d-inline");
+        document.getElementById("pin").style.display = "block";
+        document.getElementById("mobile").focus();
+    }
+    document.getElementById("pills-profile-tab").onclick = function () {
+        document.getElementById("pills-profile-tab").classList.add("active");
+        document.getElementById("pills-part-a-tab").classList.remove("active");
+        document.getElementById("mob").style.display = "none";
+        document.getElementById("mobile").value = '';
+        document.getElementById("profilepin").value = '';
+        document.getElementById("profile_err").innerHTML = '';
+        document.getElementById("multiuserDiv").style.display = "none";
+        document.getElementById("multiuser").innerHTML = '';
+        document.getElementById('mobile_msg').classList.remove("d-inline");
+        document.getElementById("user").style.display = "block";
+        document.getElementById("pin").style.display = "block";
+        document.getElementById("username").focus();
+    }
+
+
+    function signin() {
+        var username = document.getElementById("username").value;
+        var mobile_aadhaar = document.getElementById("mobile").value;
+        var multiuser = document.getElementById("user").value;
+        if (multiuser !== undefined && multiuser.length === 36) {
+            username = multiuser;
+            //mobile_aadhaar='';
+        }
+        var pin = document.getElementById("profilepin").value;
+        var token = document.getElementById("csrf").value;
+        if (pin.length !== 6) {
+            pin = '';
+            document.getElementById("profilepin").focus();
+            document.getElementById("pin_msg").innerHTML = 'Please enter a 6 digin PIN.';
+            return false;
+        }
+
+        if (username === "") {
+            if (mobile_aadhaar.length !== 10 && mobile_aadhaar.length !== 12) {
+                document.getElementById('mobile_msg').classList.add("d-inline");
+                document.getElementById('mobileHelp').style.display = "none";
+                return false;
+            }
+        }
+        if (mobile_aadhaar === "" && username.length <= 3) {
+            document.getElementById('user_msg').classList.add("d-inline");
+            document.getElementById('usernameHelp').style.display = "none";
+            return false;
+
+        }
+
+        loading('show');
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var res = JSON.parse(this.responseText);
+                if (res.status === 'success') {
+                    loading('hide');
+                    document.getElementById("profile_card").style.display = 'none';
+                    document.getElementById("otp_card").style.display = 'Block';
+                    document.getElementById("otp_sent_success").innerHTML = res.msg;
+                    document.getElementById("txn").value = res.txn;
+                    document.getElementById("user").value = res.lockerid;
+                    if (res.hasOwnProperty('mobile_linked') && res.mobile_linked == 'yes') {
+                        document.getElementById("mobile_update_link").style.display = 'block';
+                    }
+                    document.getElementById("a_otp_1").focus();
+                    clear_input('a_otp', 1);
+                    resend_otp_timer();
+                } else if (res.status === 'error') {
+                    loading('hide');
+                    document.getElementById("pinHelp").style.display = 'none';
+                    document.getElementById("usernameHelp").style.display = 'none';
+                    document.getElementById("mobileHelp").style.display = 'none';
+                    document.getElementById("profile_err").innerHTML = res.error_description;
+                }
+            } else if (this.readyState === 4) {
+                loading('hide');
+                document.getElementById("profile_err").innerHTML = '   ';
+            }
+        };
+        xhttp.open("POST", "/signin/signin_request", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.timeout = 180000; // Set timeout to 4 seconds (4000 milliseconds)
+        xhttp.ontimeout = function () {
+            loading('hide');
+            document.getElementById("profile_err").innerHTML = ' .[#timeout-c120]';
+        };
+        xhttp.send("username=" + username + "&pin=" + pin + "&token=" + token + "&aadhaar_mobile=" + mobile_aadhaar);
+        return false;
+    }
+
+    function verify_otp() {
+        document.getElementById("otp_err").innerHTML = '';
+        var user = document.getElementById("user").value;
+        var otp = get_input_value('a_otp', 1);
+        if (otp.length !== 6) {
+            document.getElementById("a_otp_1").focus();
+            document.getElementById("otp_err").innerHTML = 'Please enter a valid OTP.';
+            return false;
+        }
+
+        enable_disable('a_otp', 'verify_otp_form', true, 1);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            try {
+                if (this.readyState === 4 && this.status === 200 && this.responseText !== 'null') {
+                    var res = JSON.parse(this.responseText);
+                    if (typeof res.code !== 'undefined' && res.code === 952) {
+                        document.getElementById("otp_err").innerHTML = res.error_description;
+                        return;
+                    }
+                    if (res.status === 'success') {
+                        loading('hide');
+                        document.getElementById("otp_card").style.display = 'none';
+                        document.getElementById("user").value = res.lockerid;
+                        if (res.user_alias != '') {
+                            var login_url = '/signin';
+                            var pin = document.getElementById("profilepin").value;
+                            final(login_url, btoa(res.username + ':' + pin));
+                        } else {
+                            document.getElementById("username_card").style.display = 'Block';
+                            if (res.username === res.lockerid) {
+                                document.getElementById("new_user").style.display = 'Block';
+                            } else {
+                                document.getElementById("old_user").style.display = 'Block';
+                                document.getElementById("old_username").value = res.username;
+                                document.getElementById("radioSelection").style.display = 'Block';
+                            }
+                        }
+
+                    } else if (res.status === 'error') {
+                        loading('hide');
+                        enable_disable('a_otp', 'verify_otp_form', false, 1);
+                        document.getElementById("otp_err").innerHTML = res.error_description;
+                    } else {
+                        loading('hide');
+                        enable_disable('a_otp', 'verify_otp_form', false, 1);
+                        document.getElementById("otp_err").innerHTML = ' .';
+                    }
+                } else if (this.readyState === 4) {
+                    loading('hide');
+                    enable_disable('a_otp', 'verify_otp_form', false, 1);
+                    document.getElementById("otp_err").innerHTML = ' .';
+                }
+            } catch (e) {
+                loading('hide');
+                enable_disable('a_otp', 'verify_otp_form', false, 1);
+                document.getElementById("otp_err").innerHTML = '   ';
+                return false;
+            }
+
+        };
+        var token = document.getElementById("csrf").value;
+        xhttp.open("POST", "/signin/verify_mobile_otp", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var txn = document.getElementById("txn").value;
+        xhttp.timeout = 180000; // Set timeout to 4 seconds (4000 milliseconds)
+        xhttp.ontimeout = function () {
+            enable_disable('a_otp', 'verify_otp_form', false, 6);
+            document.getElementById("otp_err").innerHTML = ' .[#timeout-c120]';
+        };
+        xhttp.send("user=" + user + "&otp=" + otp + "&txn=" + txn + "&token=" + token);
+        return false;
+    }
+    function movetosignin() {
+        document.getElementById("mobile_landing").style.display = "none";
+        document.getElementById("profile_card").style.display = "block";
+        document.getElementById("mobile").focus();
+    }
+
+    function enablenewuser(str) {
+        var state = str.value;
+        if (state == "new") {
+            document.getElementById("set_username").value = '';
+            document.getElementById('user_msg2').classList.remove("d-inline");
+            document.getElementById("new_user").style.display = 'Block';
+            document.getElementById("useralias_button").disabled = true;
+        } else {
+            document.getElementById("set_username").value = '';
+            document.getElementById("new_user").style.display = 'none';
+            document.getElementById("useralias_button").disabled = false;
+
+        }
+
+    }
+
+    function enable_alias_submit(str) {
+        document.getElementById('user_msg1').innerHTML = '';
+        document.getElementById('user_msg1').classList.remove("d-inline");
+        var userAliasPattern = /^[a-zA-Z][a-zA-Z0-9_.-]*$/;
+        var a = str.value;
+        if (a.length >= 4 && userAliasPattern.test(a)) {
+            document.getElementById("useralias_button").disabled = false;
+            document.getElementById('user_msg2').classList.remove("d-inline");
+        } else if (a.length == 0) {
+            document.getElementById('user_msg2').classList.remove("d-inline");
+        } else {
+            document.getElementById("username_err").innerHTML = '';
+            document.getElementById('user_msg2').classList.add("d-inline");
+            document.getElementById("useralias_button").disabled = true;
+        }
+
+    }
+
+
+    function create_username() {
+        document.getElementById("username_err").innerHTML = '';
+        var user = document.getElementById("user").value;
+        var new_username = document.getElementById("set_username").value;
+        var userAliasPattern = /^[a-zA-Z][a-zA-Z0-9_.-]*$/;
+        if (new_username.length > 0) {
+            if (!userAliasPattern.test(new_username)) {
+                document.getElementById('user_msg2').innerHTML = 'Username must contain min 4 and max 50 characters, consisting only of alphabets, numbers and special characters  - (hyphen) _ (underscore) .(dot)';
+                document.getElementById('user_msg2').classList.add("d-inline");
+                document.getElementById('user_msg1').innerHTML = '';
+                document.getElementById('user_msg1').classList.remove("d-inline");
+                return false;
+            }
+        }
+        var old_username = document.getElementById("old_username").value;
+        var username = "";
+        if (old_username != "" && new_username != "") {
+            username = new_username.toLowerCase();
+        } else if (old_username == "" && new_username != "") {
+            username = new_username.toLowerCase();
+        } else if (old_username != "" && new_username == "") {
+            if (!userAliasPattern.test(old_username)) {
+                document.getElementById('user_msg1').innerHTML = 'Username must contain min 4 and max 50 characters, consisting only of alphabets, numbers and special characters  - (hyphen) _ (underscore) .(dot)';
+                document.getElementById('user_msg1').classList.add("d-inline");
+                document.getElementById("new_user").style.display = 'Block';
+                document.getElementById("set_username").focus();
+                document.getElementById("radioSelection").style.display = 'none';
+                document.getElementById("useralias_button").disabled = true;
+                return false;
+            }
+            username = old_username.toLowerCase();
+        }
+
+        if (username == "" || username.length < 4 || username.length > 50) {
+            document.getElementById("set_username").focus();
+            document.getElementById('user_msg2').classList.add("d-inline");
+            return false;
+        }
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            try {
+                if (this.readyState === 4 && this.status === 200 && this.responseText !== 'null') {
+                    var res = JSON.parse(this.responseText);
+                    if (typeof res.code !== 'undefined' && res.code === 952) {
+                        document.getElementById("username_err").innerHTML = res.error_description;
+                        return;
+                    }
+                    if (res.status === 'success') {
+                        loading('hide');
+                        document.getElementById("username_card").style.display = 'none';
+                        document.getElementById("newUsernameSuccess_card").style.display = 'Block';
+                        setTimeout(function () {
+                            document.getElementById("newUsernameSuccess_card").style.display = 'none';
+                            document.getElementById("verified_logo").style.display = 'Block';
+                            var login_url = '/signin';
+                            var pin = document.getElementById("profilepin").value;
+                            final(login_url, btoa(res.username + ':' + pin));
+                        }, 5000);
+                    } else if (res.status === 'error') {
+                        document.getElementById('user_msg2').classList.remove("d-inline");
+                        document.getElementById("username_err").innerHTML = res.error_description;
+                    } else {
+                        document.getElementById("username_err").innerHTML = ' .';
+                    }
+                } else if (this.readyState === 4) {
+                    document.getElementById("username_err").innerHTML = ' .';
+                }
+            } catch (e) {
+                document.getElementById("username_err").innerHTML = '   ';
+                return false;
+            }
+
+        };
+       
+        
+
+    }
+</script>
+
+
+
+
+<div class="betternet-wrapper"></div></body></html>

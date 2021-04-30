@@ -1,0 +1,99 @@
+*{
+    list-style: none;
+    margin: 0px;
+}
+.banner{
+    background-color: black;
+    color: white;
+}
+.banner{
+    height: 50px;
+    align-items: center;
+}
+.banner p{
+    padding-top: 10px;
+}
+.banner p a{
+    padding-right:  100px;
+    padding-left: 100px;
+    color: white;
+}
+.sidebar{
+    position: relative;
+    margin-right: 0px;
+    left: 0;
+    width: 250px;
+    background-color: rgba(0, 0, 0, 0.263);
+    display: inline-block;
+    float: left;
+}
+.sidebar header{
+    font-size: 22px;
+    color: aqua;
+    text-align: center;
+    line-height: 70px;
+    background-color: rgba(0, 0, 0, 0.379);
+    user-select: none;
+}
+.sidebar ul a{
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 20px;
+    color: white;
+    padding-left: 30px;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid black;
+}
+.sidebar ul a li:hover {
+    padding-left: 25px;
+    transition: .4s;
+}
+.table{
+    display: block;
+    left: 260px;
+    width: 70%;
+    float: left;
+    padding-top: 120px;
+    padding-left: 80px;
+}
+.sr_no{
+    width: 180px;
+    height: 60px;
+    background-color: rgba(10, 239, 212 ,0.3);
+    text-align: center;
+    border: 1px solid grey;
+}
+.doc_name{
+    width: 480px;
+    height: 60px;
+    background-color: rgba(210, 239, 64,0.3);
+    text-align: center;
+    border: 1px solid grey;
+}
+.doc_input{
+    width: 200px;
+    height: 60px;
+    background-color: rgba(215, 134, 209,0.3);
+    text-align: center;
+    border: 1px solid grey;
+}
+.upload{
+    /* border: 2px solid rgba(6, 6, 244,0.6);    */
+    float: right;
+    padding-right: 30px;
+}
+.upload input[type=file]{
+    
+    border: 1px solid blueviolet;
+    border-radius: 10px;
+}
+.doc_view{
+    width: 140px;
+    height: 60px;
+    background-color: rgba(232, 172, 186,0.3);
+    text-align: center;
+    border: 1px solid grey;
+}

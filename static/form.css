@@ -1,0 +1,89 @@
+*{
+    list-style: none;
+    margin: 0px;
+}
+a{
+    color: aliceblue;
+}
+.banner{
+    background-color: black;
+    color: white;
+}
+.banner_left{
+    position: absolute;
+    right: 0;
+}
+.sidebar{
+    position: relative;
+    margin-right: 0px;
+    left: 0;
+    width: 250px;
+    background-color: rgba(0, 0, 0, 0.263);
+    display: inline-block;
+    float: left;
+}
+.sidebar header{
+    font-size: 22px;
+    color: aqua;
+    text-align: center;
+    line-height: 70px;
+    background-color: rgba(0, 0, 0, 0.379);
+    user-select: none;
+}
+.sidebar ul a{
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 20px;
+    color: white;
+    padding-left: 30px;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid black;
+}
+.sidebar ul a li:hover {
+    padding-left: 25px;
+    transition: .4s;
+}
+.whole_form{
+    border: 3px solid black;
+    border-radius: 40px;
+}
+.form_header{
+    background-color: rgb(0, 162, 255);
+}
+.form li {
+    display: inline-block;
+    padding: 40px 110px;
+}
+.form_layout{
+    display: block;
+    left: 260px;
+    width: 80%;
+    float: left;
+}
+.banner{
+    height: 50px;
+    align-items: center;
+}
+.banner p{
+    padding-top: 10px;
+}
+.banner p a{
+    padding-right:  100px;
+    padding-left: 100px;
+}
+.submit{
+    width: 900px;
+    padding-left: 400px;
+}
+.submit input{
+    border: 2px solid green;
+    width: 150px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgb(0, 110, 255);
+    color: white;
+
+}
